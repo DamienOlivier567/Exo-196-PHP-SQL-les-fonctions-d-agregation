@@ -25,6 +25,80 @@
 
     // TODO Votre code ici, commencez par require un des objet de connexion que nous avons fait ensemble.
 
+    $server = 'localhost';
+    $db = 'exo_194';
+    $user = 'root';
+    $pass = '';
+
+    $bdd = new PDO("mysql:host=$server;dbname=$db;charset=utf8", $user,$pass);
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+    // 3. Récupérez l'age minimum des utilisateurs
+
+    $stmt = $bdd->prepare("SELECT MIN(age) FROM user");
+
+    $state = $stmt->execute();
+
+    if ($state){
+        $min = $stmt->fetch();
+        echo "Le plus petit est " .$min. "ans";
+    }
+
+    //4. Récupérez l'âge maximum des utilisateurs.
+
+    $stmt = $bdd->prepare("SELECT MAX(age) FROM user");
+
+    $state = $stmt->execute();
+
+    if ($state){
+        $max = $stmt->fetch();
+        echo "Le plus grand est " .$max. "ans";
+    }
+
+    //5. Récupérez le nombre total d'utilisateurs dans la table à l'aide de la fonction d'agrégation COUNT().
+
+    $stmt = $bdd->prepare("SELECT COUNT(*) FROM user");
+
+    $state = $stmt->execute();
+
+    if ($state){
+        $count = $stmt->fetch();
+        echo "Il y a " .$count. "utilisateurs";
+    }
+
+    //6. Récupérer le nombre d'utilisateurs ayant un numéro de rue plus grand ou égal à 5.
+
+    $stmt = $bdd->prepare("SELECT COUNT(*) FROM user WHERE numero >= 5");
+
+    $state = $stmt->execute();
+
+    if ($state){
+        $countt = $stmt->fetch();
+        echo "Le plus petit est " .$countt. "ans";
+    }
+
+    //7. Récupérez la moyenne d'âge des utilisateurs.
+
+    $stmt = $bdd->prepare("SELECT AVG(age) FROM user");
+
+    $state = $stmt->execute();
+
+    if ($state){
+        $avg = $stmt->fetch();
+        echo "La moyenne est " .$avg. "ans";
+    }
+
+    //8. Récupérer la somme des numéros de maison des utilisateurs ( bien que ca n'ait pas de sens ).
+
+    $stmt = $bdd->prepare("SELECT SUM(numero) FROM user");
+
+    $state = $stmt->execute();
+
+    if ($state){
+        $sum = $stmt->fetch();
+        echo "La somme est " .$sum;
+    }
 
     ?>
 </body>
